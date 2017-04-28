@@ -7,3 +7,21 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+.danger-icon {
+  color: #dd3124;
+  cursor: pointer;
+}
+
+.is-centered {
+  display: flex;
+
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.footer {
+  margin-bottom: -20px;
+}

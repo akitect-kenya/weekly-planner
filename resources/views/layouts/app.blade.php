@@ -36,9 +36,9 @@
         <h2 class="icon icon-world">Planner</h2>
         <ul>
             <li><a class="icon icon-settings" href="#">WB Setup</a></li>
-            <li><a class="icon icon-tag" href="#">Departments</a></li>
+            <li><a class="icon icon-tag" href="{{ url('/departments') }}">Departments</a></li>
             <li><a class="icon icon-user" href="#">Users</a></li>
-            <li><a class="icon icon-note" href="#">Subjects</a></li>
+            <li><a class="icon icon-note" href="{{ url('/subjects') }}">Subjects</a></li>
             <li><a class="icon icon-t-shirt" href="#">Grades</a></li>
             <li><a class="icon icon-calendar" href="#">Weekly Plans</a></li>
             <li><a class="icon icon-data" href="#">Reports</a></li>
@@ -50,22 +50,44 @@
         <div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
             <!-- Top Navigation -->
             <div id="top-nav" class="top-nav clearfix">
-                <button data-effect="st-effect-4">
-                    <i class="fa fa-bars"></i> Menu
-                </button>
+                @if (!\Auth::guest())
+                    <button data-effect="st-effect-4">
+                        <i class="fa fa-bars"></i> Menu
+                    </button>
+                @endif
+                <!-- Authentication Links -->
+                @if (Auth::guest())
+                    <div class="pull-right">
+                        <a href="{{ url('/login') }}">
+                            Login
+                        </a>
 
-                <div class="pull-right">
-                    <a href="{{ url('/login') }}">
-                        Login
-                    </a>
+                        <a href="{{ url('/register') }}">
+                            Register
+                        </a>
+                    </div>
+                @else
+                    <div class="pull-right">
+                        <a href="#">
+                            {{ \Auth::user()->name }}
+                        </a>
 
-                    <a href="{{ url('/register') }}">
-                        Register
-                    </a>
-                </div>
+                        <a href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
+                @endif
             </div>
 
-            @yield('content')
+            <div id="app">
+                @yield('content')
+            </div>
         </div><!-- /st-content-inner -->
     </div><!-- /st-content -->
 </div><!-- /st-container -->

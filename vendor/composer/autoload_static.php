@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita9c800057853bf43d5e507bb968f4638
+class ComposerStaticInit869fc39f4834acf554c3d9e4ffc16041
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -336,7 +336,9 @@ class ComposerStaticInita9c800057853bf43d5e507bb968f4638
         'Cartalyst\\Sentry\\Users\\UserNotActivatedException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
         'Cartalyst\\Sentry\\Users\\UserNotFoundException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
         'Cartalyst\\Sentry\\Users\\WrongPasswordException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'CreateDepartmentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_27_184348_create_departments_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreateSubjectsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_28_050325_create_subjects_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/CronExpression.php',
@@ -2344,12 +2346,14 @@ class ComposerStaticInita9c800057853bf43d5e507bb968f4638
         'PhpParser\\Unserializer' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Unserializer.php',
         'PhpParser\\Unserializer\\XML' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Unserializer/XML.php',
         'Planner\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'Planner\\Department' => __DIR__ . '/../..' . '/app/Department.php',
         'Planner\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'Planner\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'Planner\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'Planner\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'Planner\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'Planner\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'Planner\\Http\\Controllers\\DepartmentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/DepartmentsController.php',
         'Planner\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'Planner\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'Planner\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -2361,6 +2365,7 @@ class ComposerStaticInita9c800057853bf43d5e507bb968f4638
         'Planner\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'Planner\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'Planner\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'Planner\\Subject' => __DIR__ . '/../..' . '/app/Subject.php',
         'Planner\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Prophecy\\Argument' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument.php',
         'Prophecy\\Argument\\ArgumentsWildcard' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',
@@ -3293,10 +3298,10 @@ class ComposerStaticInita9c800057853bf43d5e507bb968f4638
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita9c800057853bf43d5e507bb968f4638::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita9c800057853bf43d5e507bb968f4638::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInita9c800057853bf43d5e507bb968f4638::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInita9c800057853bf43d5e507bb968f4638::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit869fc39f4834acf554c3d9e4ffc16041::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit869fc39f4834acf554c3d9e4ffc16041::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit869fc39f4834acf554c3d9e4ffc16041::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit869fc39f4834acf554c3d9e4ffc16041::$classMap;
 
         }, null, ClassLoader::class);
     }
