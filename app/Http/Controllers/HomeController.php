@@ -3,6 +3,7 @@
 namespace Planner\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Planner\WeekSetup;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $wbSetups = WeekSetup::paginate(5);
+
+        return view('home', compact('wbSetups'));
     }
 }

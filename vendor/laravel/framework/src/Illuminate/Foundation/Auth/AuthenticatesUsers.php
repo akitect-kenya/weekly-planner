@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 trait AuthenticatesUsers
 {
@@ -142,7 +143,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'email';
+        return 'emailAddress';
     }
 
     /**

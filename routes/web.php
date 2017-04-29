@@ -31,3 +31,11 @@ Route::delete('/departments/{department}', 'DepartmentsController@destroy');
 Route::get('/subjects', 'SubjectsController@index');
 Route::post('/subjects', 'SubjectsController@store');
 Route::delete('/subjects/{subject}', 'SubjectsController@destroy');
+
+
+Route::get('/users', 'UsersController@index');
+Route::post('/users', 'UsersController@store');
+Route::delete('/users/{user}', 'UsersController@destroy');
+
+Route::post('/setups', 'WeekSetupsController@store');
+Route::delete('/setups/{setup}', 'WeekSetupsController@destroy');

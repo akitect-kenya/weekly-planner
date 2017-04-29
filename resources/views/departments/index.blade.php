@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
                 <crud delete-url="{{ url('/departments') }}" inline-template>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -20,44 +20,42 @@
 
                         <div class="panel-body">
                             <div class="crud">
-                                <div v-if="!creating" class="crud-list">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            #
-                                        </div>
-
-                                        <div class="col-md-8">
-                                            Name
-                                        </div>
-
-                                        <div class="col-md-2 text-center">
-                                            Actions
-                                        </div>
-                                    </div>
-                                    @foreach($departments as $department)
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                {{ $loop->index + 1 }}
-                                            </div>
-
-                                            <div class="col-md-8">
-                                                {{ $department->name }}
-                                            </div>
-
-                                            <div class="col-md-2 text-center">
-                                                <i v-on:click="deleteDepartment({{ $department->id }})" class="fa fa-trash danger-icon"></i>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-                                    <div class="row">
-                                        <div class="col-md-12 is-centered footer">
-                                            {{ $departments->links() }}
-                                        </div>
-                                    </div>
+                                <div v-show="!creating" class="crud-list">
+                                    <table id="data-table" class="table table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th class="text-center">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th class="text-center">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach($departments as $department)
+                                                <tr>
+                                                    <th>{{ $loop->index + 1 }}</th>
+                                                    <th>{{ $department->name }}</th>
+                                                    <th class="text-center">
+                                                        <i v-on:click="deleteDepartment({{ $department->id }})"
+                                                           class="fa fa-trash danger-icon"></i>
+                                                    </th>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
 
-                                <div v-if="creating" class="crud-form">
+                                <div v-show="creating" class="crud-form">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h5>

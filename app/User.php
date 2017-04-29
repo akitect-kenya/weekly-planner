@@ -3,11 +3,12 @@
 namespace Planner;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +16,34 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'IDTypeID',
+        'password',
+        'userName',
+        'emailAddress',
+        'surName',
+        'otherNames',
+        'idNumber',
+        'refNumber',
+        'msisdn',
+        'passwordStatus',
+        'datePasswordChanged',
+        'passwordAttempts',
+        'last_login',
+        'lastLoginIP',
+        'active',
+        'userNameArchived',
+        'dateActivated',
+        'MSISDNArchived',
+        'passwordCanExpire',
+        'canAccessUI',
+        'apiKey',
+        'question',
+        'answer',
+        'org_id',
+        'session_id',
+        'updatedBy',
+        'archivedBy',
+        'dateLastReminded',
     ];
 
     /**
