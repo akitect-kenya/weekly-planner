@@ -200,7 +200,7 @@ body,
 }
 
 .st-effect-4.st-menu {
-	z-index: 1;
+	z-index: 250;
 	-webkit-transform: translate3d(-50%, 0, 0);
 	transform: translate3d(-50%, 0, 0);
 }

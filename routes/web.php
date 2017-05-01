@@ -19,6 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+// Sidenav
+Route::get('/academic', 'AcademicTabController@index');
+Route::get('/administrative', 'AdministrativeTabController@index');
+Route::get('/plans', 'PlansTabController@index');
+
 // Departments
 Route::get('/departments', 'DepartmentsController@index');
 Route::get('/departments/create', 'DepartmentsController@create');

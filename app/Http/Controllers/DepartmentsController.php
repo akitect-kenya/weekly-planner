@@ -8,28 +8,6 @@ use Planner\Department;
 class DepartmentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $departments = Department::paginate(5);
-
-        return view('departments.index', compact('departments'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('departments.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,7 +17,7 @@ class DepartmentsController extends Controller
     {
         \Auth::user()->departments()->create($request->all());
 
-        return redirect('/departments');
+        return redirect('/academic');
     }
 
     /**
@@ -81,7 +59,7 @@ class DepartmentsController extends Controller
 
         $department->update($request->all());
 
-        return redirect('/departments');
+        return redirect('/academic');
     }
 
     /**
@@ -96,6 +74,6 @@ class DepartmentsController extends Controller
 
         $department->delete();
 
-        return redirect('/departments');
+        return redirect('/academic');
     }
 }

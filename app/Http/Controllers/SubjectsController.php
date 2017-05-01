@@ -7,17 +7,6 @@ use Planner\Subject;
 
 class SubjectsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $subjects = Subject::paginate(5);
-
-        return view('subjects.index', compact('subjects'));
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -29,7 +18,7 @@ class SubjectsController extends Controller
     {
         Subject::create($request->all());
 
-        return redirect('/subjects');
+        return redirect('/academic');
     }
 
     /**
@@ -44,6 +33,6 @@ class SubjectsController extends Controller
 
         $subject->delete();
 
-        return redirect('/subjects');
+        return redirect('/academic');
     }
 }

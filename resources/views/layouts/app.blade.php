@@ -39,11 +39,9 @@
         <h2 class="icon icon-world">Planner</h2>
         <ul>
             <li><a class="icon icon-display" href="{{ url('/home') }}">Dashboard</a></li>
-            <li><a class="icon icon-tag" href="{{ url('/departments') }}">Departments</a></li>
-            <li><a class="icon icon-user" href="{{ url('/users') }}">Users</a></li>
-            <li><a class="icon icon-note" href="{{ url('/subjects') }}">Subjects</a></li>
-            <li><a class="icon icon-t-shirt" href="#">Grades</a></li>
-            <li><a class="icon icon-calendar" href="#">Weekly Plans</a></li>
+            <li><a class="icon icon-calendar" href="{{ url('/plans') }}">Weekly Plans</a></li>
+            <li><a class="icon icon-note" href="{{ url('/academic') }}">Academic</a></li>
+            <li><a class="icon icon-user" href="{{ url('/administrative') }}">Administrative</a></li>
             <li><a class="icon icon-data" href="#">Reports</a></li>
         </ul>
     </nav>
@@ -108,6 +106,9 @@
 <script>
     $(document).ready(function() {
         $('#data-table').DataTable();
+        $('#data-table-1').DataTable();
+        $('#data-table-2').DataTable();
+        $('#data-table-3').DataTable();
     } );
 
     if (document.getElementById( 'tabs' ) !== null) {

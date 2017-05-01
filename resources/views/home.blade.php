@@ -30,7 +30,7 @@
 
                                 <div class="panel-body">
                                     <div class="crud">
-                                        <div v-if="!creating" class="crud-list">
+                                        <div v-show="!creating" class="crud-list">
                                             <table id="data-table" class="table table-responsive">
                                                 <thead>
                                                 <tr>
@@ -74,7 +74,7 @@
                                             </table>
                                         </div>
 
-                                        <div v-if="creating" class="crud-form">
+                                        <div v-show="creating" class="crud-form">
 
                                             <div class="row">
                                                 <div class="col-md-12">
