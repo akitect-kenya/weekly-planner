@@ -3,9 +3,9 @@
 namespace Planner\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Planner\Subject;
+use Planner\Grade;
 
-class SubjectsController extends Controller
+class GradesController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -15,7 +15,7 @@ class SubjectsController extends Controller
      */
     public function store(Request $request)
     {
-        Subject::create($request->all());
+        Grade::create($request->all());
 
         return redirect('/academic');
     }
@@ -29,9 +29,9 @@ class SubjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $subject = Subject::findOrFail($id);
+        $grade = Grade::findOrFail($id);
 
-        $subject->update($request->all());
+        $grade->update($request->all());
 
         return redirect('/academic');
     }
@@ -44,9 +44,9 @@ class SubjectsController extends Controller
      */
     public function destroy($id)
     {
-        $subject = Subject::findOrFail($id);
+        $grade = Grade::findOrFail($id);
 
-        $subject->delete();
+        $grade->delete();
 
         return redirect('/academic');
     }

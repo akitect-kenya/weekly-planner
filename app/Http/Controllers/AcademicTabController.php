@@ -3,6 +3,7 @@
 namespace Planner\Http\Controllers;
 
 use Planner\Department;
+use Planner\Grade;
 use Planner\Subject;
 
 class AcademicTabController extends Controller
@@ -21,8 +22,8 @@ class AcademicTabController extends Controller
         $departments = Department::all();
 
         // Grades
-        // TODO: Fetch all the grades.
+        $grades = Grade::all();
 
-        return view('academic.index', compact('subjects', 'departments'));
+        return view('academic.index', compact('subjects', 'departments', 'grades'));
     }
 }

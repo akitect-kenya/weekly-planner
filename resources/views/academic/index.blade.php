@@ -176,28 +176,30 @@
                         </section>
 
                         <section id="grades">
-                            <crud delete-url="{{ url('/departments') }}" inline-template>
+                            <crud delete-url="{{ url('/grades') }}" inline-template>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Departments
+                                        Grades
 
-                                        <a v-if="!creating" href="#" v-on:click="create()" class="pull-right">
+                                        <a v-if="!creating && !updating" href="#" v-on:click="create()" class="pull-right">
                                             New
                                         </a>
 
-                                        <a v-if="creating" href="#" v-on:click="cancel()" class="pull-right">
+                                        <a v-if="creating || updating" href="#" v-on:click="cancel()" class="pull-right">
                                             Cancel
                                         </a>
                                     </div>
 
                                     <div class="panel-body">
                                         <div class="crud">
-                                            <div v-show="!creating" class="crud-list">
+                                            <div v-show="!creating && !updating" class="crud-list">
                                                 <table id="data-table-1" class="table table-responsive">
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Level</th>
                                                         <th class="text-center">
                                                             Actions
                                                         </th>
@@ -207,18 +209,25 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Level</th>
                                                         <th class="text-center">
                                                             Actions
                                                         </th>
                                                     </tr>
                                                     </tfoot>
                                                     <tbody>
-                                                    @foreach($departments as $department)
+                                                    @foreach($grades as $grade)
                                                         <tr>
                                                             <th>{{ $loop->index + 1 }}</th>
-                                                            <th>{{ $department->name }}</th>
+                                                            <th>{{ $grade->class_name }}</th>
+                                                            <th>{{ $grade->class_desc }}</th>
+                                                            <th>{{ $grade->level }}</th>
                                                             <th class="text-center">
-                                                                <i v-on:click="deleteDepartment({{ $department->id }})"
+                                                                <i v-on:click="updateModel({{ json_encode($grade) }})"
+                                                                   class="fa fa-edit info-icon"></i>
+
+                                                                <i v-on:click="deleteDepartment({{ $grade->id }})"
                                                                    class="fa fa-trash danger-icon"></i>
                                                             </th>
                                                         </tr>
@@ -231,23 +240,23 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <h5>
-                                                            Create new department
+                                                            Create new grades
                                                         </h5>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <form action="{{ url('/departments') }}" method="POST">
+                                                        <form action="{{ url('/grades') }}" method="POST">
 
                                                             {{ csrf_field() }}
 
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
-                                                                        <label for="name">Name:</label>
-                                                                        <input id="name"
-                                                                               name="name"
+                                                                        <label for="class_name">Name:</label>
+                                                                        <input id="class_name"
+                                                                               name="class_name"
                                                                                type="text"
                                                                                class="form-control">
                                                                     </div>
@@ -255,9 +264,104 @@
                                                             </div>
 
                                                             <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="level">Level:</label>
+                                                                        <input id="level"
+                                                                               name="level"
+                                                                               type="text"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="class_desc">Description:</label>
+                                                                        <textarea name="class_desc"
+                                                                                  id="class_desc"
+                                                                                  cols="30"
+                                                                                  class="form-control"
+                                                                                  rows="10"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
                                                                 <div class="col-md-12 text-center">
                                                                     <button class="btn btn-submit">
-                                                                        Create department
+                                                                        Create grades
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-show="updating" class="crud-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5>
+                                                            Update grade
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form v-bind:action="'{{ url('/grades') }}' + '/' + model.id"
+                                                              method="POST">
+
+                                                            {{ csrf_field() }}
+
+                                                            {{ method_field('PUT') }}
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="class_name">Name:</label>
+                                                                        <input id="class_name"
+                                                                               name="class_name"
+                                                                               type="text"
+                                                                               v-model="model.class_name"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="level">Level:</label>
+                                                                        <input id="level"
+                                                                               name="level"
+                                                                               type="text"
+                                                                               v-model="model.level"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="class_desc">Description:</label>
+                                                                        <textarea name="class_desc"
+                                                                                  id="class_desc"
+                                                                                  cols="30"
+                                                                                  class="form-control"
+                                                                                  v-model="model.class_desc"
+                                                                                  rows="10"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <button class="btn btn-submit">
+                                                                        Update grade
                                                                     </button>
                                                                 </div>
                                                             </div>

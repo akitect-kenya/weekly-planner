@@ -30,17 +30,24 @@ Route::post('/departments', 'DepartmentsController@store');
 Route::put('/departments/{department}', 'DepartmentsController@update');
 Route::delete('/departments/{department}', 'DepartmentsController@destroy');
 
+// Grades
+Route::post('/grades', 'GradesController@store');
+Route::put('/grades/{grade}', 'GradesController@update');
+Route::delete('/grades/{grade}', 'GradesController@destroy');
+
+// Subjects
 Route::get('/subjects', 'SubjectsController@index');
 Route::post('/subjects', 'SubjectsController@store');
 Route::put('/subjects/{subject}', 'SubjectsController@update');
 Route::delete('/subjects/{subject}', 'SubjectsController@destroy');
 
-
+// Users
 Route::get('/users', 'UsersController@index');
 Route::post('/users', 'UsersController@store');
 Route::put('/users/{user}', 'UsersController@update');
 Route::delete('/users/{user}', 'UsersController@destroy');
 
+// Setups
 Route::post('/setups', 'WeekSetupsController@store');
 Route::put('/setups/{setup}', 'WeekSetupsController@update');
 Route::delete('/setups/{setup}', 'WeekSetupsController@destroy');
