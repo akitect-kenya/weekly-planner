@@ -42,4 +42,5 @@ Route::put('/users/{user}', 'UsersController@update');
 Route::delete('/users/{user}', 'UsersController@destroy');
 
 Route::post('/setups', 'WeekSetupsController@store');
+Route::put('/setups/{setup}', 'WeekSetupsController@update');
 Route::delete('/setups/{setup}', 'WeekSetupsController@destroy');

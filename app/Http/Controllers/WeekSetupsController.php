@@ -17,7 +17,23 @@ class WeekSetupsController extends Controller
     {
         WeekSetup::create($request->all());
 
-        return redirect('/home');
+        return redirect('/plans');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $setup = WeekSetup::findOrFail($id);
+
+        $setup->update($request->all());
+
+        return redirect('/plans');
     }
 
     /**
@@ -32,6 +48,6 @@ class WeekSetupsController extends Controller
 
         $wksetup->delete();
 
-        return redirect('/home');
+        return redirect('/plans');
     }
 }

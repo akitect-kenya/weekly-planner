@@ -27,18 +27,18 @@
                                     <div class="panel-heading">
                                         Weekly Setups
 
-                                        <a v-if="!creating" href="#" v-on:click="create()" class="pull-right">
+                                        <a v-if="!creating && !updating" href="#" v-on:click="create()" class="pull-right">
                                             New
                                         </a>
 
-                                        <a v-if="creating" href="#" v-on:click="cancel()" class="pull-right">
+                                        <a v-if="creating || updating" href="#" v-on:click="cancel()" class="pull-right">
                                             Cancel
                                         </a>
                                     </div>
 
                                     <div class="panel-body">
                                         <div class="crud">
-                                            <div v-show="!creating" class="crud-list">
+                                            <div v-show="!creating && !updating" class="crud-list">
                                                 <table id="data-table" class="table table-responsive">
                                                     <thead>
                                                     <tr>
@@ -73,6 +73,9 @@
                                                             <td>{{ $wbSetup->noPeriodsDay }}</td>
                                                             <td>{{ $wbSetup->workPlanDesc }}</td>
                                                             <th class="text-center">
+                                                                <i v-on:click="updateModel({{ json_encode($wbSetup) }})"
+                                                                   class="fa fa-edit info-icon"></i>
+
                                                                 <i v-on:click="deleteDepartment({{ $wbSetup->id }})"
                                                                    class="fa fa-trash danger-icon"></i>
                                                             </th>
@@ -160,6 +163,99 @@
                                                                 <div class="col-md-12 text-center">
                                                                     <button class="btn btn-submit">
                                                                         Create Weekly Setup
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-show="updating" class="crud-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form v-bind:action="'{{ url('/setups') }}' + '/' + model.id"
+                                                              method="POST">
+
+                                                            {{ csrf_field() }}
+
+                                                            {{ method_field('PUT') }}
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="weeklySetupName">Name:</label>
+                                                                        <input id="weeklySetupName"
+                                                                               name="weeklySetupName"
+                                                                               v-model="model.weeklySetupName"
+                                                                               type="text"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="noDaysWeek">No. of days of the week:</label>
+                                                                        <input id="noDaysWeek"
+                                                                               name="noDaysWeek"
+                                                                               v-model="model.noDaysWeek"
+                                                                               type="number"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="startDay">First day of the week:</label>
+                                                                        <select v-model="model.startDay"
+                                                                                class="form-control"
+                                                                                name="startDay"
+                                                                                id="startDay">
+                                                                            <option value="sunday">Sunday</option>
+                                                                            <option value="monday">Monday</option>
+                                                                            <option value="tuesday">Tuesday</option>
+                                                                            <option value="wednesday">Wednesday</option>
+                                                                            <option value="thursday">Thursday</option>
+                                                                            <option value="friday">Friday</option>
+                                                                            <option value="saturday">Saturday</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="noPeriodsDay">No. of periods in a day:</label>
+                                                                        <input id="noPeriodsDay"
+                                                                               type="number"
+                                                                               name="noPeriodsDay"
+                                                                               class="form-control"
+                                                                               v-model="model.noPeriodsDay">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="workPlanDesc">Description:</label>
+                                                                        <textarea v-model="model.workPlanDesc"
+                                                                                  name="workPlanDesc"
+                                                                                  id="workPlanDesc"
+                                                                                  cols="30"
+                                                                                  class="form-control"
+                                                                                  rows="10"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <button class="btn btn-submit">
+                                                                        Update Weekly Setup
                                                                     </button>
                                                                 </div>
                                                             </div>
