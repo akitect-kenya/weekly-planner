@@ -55,9 +55,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
+    /**
+     * Link to the departments a user created.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function departments()
     {
         return $this->hasMany(Department::class);
+    }
+
+    /**
+     * Link to the departments the user is assigned to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function depAssignment()
+    {
+        return $this->belongsToMany(Department::class, 'department_user');
     }
 }

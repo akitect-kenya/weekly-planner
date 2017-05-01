@@ -9,18 +9,6 @@ use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $users = User::paginate();
-
-        return view('users.index', compact('users'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,7 +27,7 @@ class UsersController extends Controller
         ]);
 
         // Save the new user
-        User::create(
+        $user = User::create(
             array_merge(
                 $request->except('password'),
 
@@ -49,30 +37,11 @@ class UsersController extends Controller
             )
         );
 
+        // Assign the user the departments.
+        $user->depAssignment()->sync($request->departments);
+
         // Redirect back to the users list.
-        return redirect('/users');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return redirect('/administrative');
     }
 
     /**
@@ -84,7 +53,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->update($request->all());
+
+        return redirect('/administrative');
     }
 
     /**
@@ -95,6 +68,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect('/administrative');
     }
 }

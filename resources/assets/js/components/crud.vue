@@ -8,6 +8,7 @@
 
             cancel() {
                 this.creating = false;
+                this.updating = false;
             },
 
             deleteDepartment(id) {
@@ -49,12 +50,32 @@
                     .attr("type", type)
                     .attr("name", name)
                     .val(value);
+            },
+
+            updateModel(model) {
+                this.updating = true;
+                this.model = model;
+            },
+
+            checkDepartmentAssignment(pin) {
+                this.model.dep_assignment.forEach((assignment) => {
+                    if (assignment.id === pin) {
+                        return true;
+                    }
+                });
+
+                return false;
             }
         },
 
         data() {
             return {
                 creating: false,
+                model: {
+                    id: 0,
+                    dep_assignment: []
+                },
+                updating: false
             }
         },
 

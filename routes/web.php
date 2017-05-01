@@ -26,20 +26,19 @@ Route::get('/plans', 'PlansTabController@index');
 
 // Departments
 Route::get('/departments', 'DepartmentsController@index');
-Route::get('/departments/create', 'DepartmentsController@create');
 Route::post('/departments', 'DepartmentsController@store');
-Route::get('/departments/{department}', 'DepartmentsController@show');
-Route::get('/departments/{department}/edit', 'DepartmentsController@edit');
 Route::put('/departments/{department}', 'DepartmentsController@update');
 Route::delete('/departments/{department}', 'DepartmentsController@destroy');
 
 Route::get('/subjects', 'SubjectsController@index');
 Route::post('/subjects', 'SubjectsController@store');
+Route::put('/subjects/{subject}', 'SubjectsController@update');
 Route::delete('/subjects/{subject}', 'SubjectsController@destroy');
 
 
 Route::get('/users', 'UsersController@index');
 Route::post('/users', 'UsersController@store');
+Route::put('/users/{user}', 'UsersController@update');
 Route::delete('/users/{user}', 'UsersController@destroy');
 
 Route::post('/setups', 'WeekSetupsController@store');

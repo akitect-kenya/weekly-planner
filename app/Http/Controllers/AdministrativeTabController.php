@@ -3,6 +3,7 @@
 namespace Planner\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Planner\Department;
 use Planner\User;
 
 class AdministrativeTabController extends Controller
@@ -15,8 +16,11 @@ class AdministrativeTabController extends Controller
     public function index()
     {
         // Users.
-        $users = User::all();
+        $users = User::with('depAssignment')->get();
 
-        return view('administrative.index', compact('users'));
+        // Departments.
+        $departments = Department::all();
+
+        return view('administrative.index', compact('departments', 'users'));
     }
 }

@@ -22,18 +22,18 @@
                                     <div class="panel-heading">
                                         Users
 
-                                        <a v-if="!creating" href="#" v-on:click="create()" class="pull-right">
+                                        <a v-if="!creating && !updating" href="#" v-on:click="create()" class="pull-right">
                                             New
                                         </a>
 
-                                        <a v-if="creating" href="#" v-on:click="cancel()" class="pull-right">
+                                        <a v-if="creating || updating" href="#" v-on:click="cancel()" class="pull-right">
                                             Cancel
                                         </a>
                                     </div>
 
                                     <div class="panel-body">
                                         <div class="crud">
-                                            <div v-if="!creating" class="crud-list">
+                                            <div v-show="!creating && !updating" class="crud-list">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <table id="data-table" class="table table-responsive">
@@ -67,6 +67,9 @@
                                                                     <td>{{ $user->otherNames }}</td>
                                                                     <td>{{ $user->userName }}</td>
                                                                     <th class="text-center">
+                                                                        <i v-on:click="updateModel({{ json_encode($user) }})"
+                                                                           class="fa fa-edit info-icon"></i>
+
                                                                         <i v-on:click="deleteDepartment({{ $user->id }})"
                                                                            class="fa fa-trash danger-icon"></i>
                                                                     </th>
@@ -78,7 +81,7 @@
                                                 </div>
                                             </div>
 
-                                            <div v-if="creating" class="crud-form">
+                                            <div v-show="creating" class="crud-form">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <h5>
@@ -193,6 +196,24 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="departments">Departments</label>
+                                                                        <select class="form-control"
+                                                                                name="departments[]"
+                                                                                id="departments"
+                                                                                multiple>
+                                                                            @foreach($departments as $department)
+                                                                                <option value="{{ $department->id }}">
+                                                                                    {{ $department->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
                                                                     <label class="radio-inline">
                                                                         <input type="radio" checked name="role" id="coordinator" value="1"> Coordinator
                                                                     </label>
@@ -206,6 +227,159 @@
                                                                 <div class="col-md-12 text-center">
                                                                     <button class="btn btn-submit">
                                                                         Create user
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-show="updating" class="crud-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5>
+                                                            Update a user
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form v-bind:action="'{{ url('/users') }}' + '/' + model.id"
+                                                              method="POST">
+
+                                                            {{ csrf_field() }}
+
+                                                            {{ method_field('PUT') }}
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="surName">SurName:</label>
+                                                                        <input id="surName"
+                                                                               name="surName"
+                                                                               type="text"
+                                                                               v-model="model.surName"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="otherNames">Other Names:</label>
+                                                                        <input id="otherNames"
+                                                                               name="otherNames"
+                                                                               type="text"
+                                                                               v-model="model.otherNames"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="userName">Username:</label>
+                                                                        <input id="userName"
+                                                                               name="userName"
+                                                                               type="text"
+                                                                               v-model="model.userName"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="emailAddress">Email:</label>
+                                                                        <input id="emailAddress"
+                                                                               name="emailAddress"
+                                                                               type="email"
+                                                                               v-model="model.emailAddress"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="IDTypeID">ID type:</label>
+                                                                        <select v-model="model.IDTypeID"
+                                                                                class="form-control"
+                                                                                name="IDTypeID"
+                                                                                id="IDTypeID">
+                                                                            <option value="id">
+                                                                                Identity Card
+                                                                            </option>
+                                                                            <option value="passport">
+                                                                                Passport Card
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="idNumber">ID Number:</label>
+                                                                        <input id="idNumber"
+                                                                               name="idNumber"
+                                                                               type="text"
+                                                                               v-model="model.idNumber"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="departments">Departments</label>
+                                                                        <select v-model="model.dep_assignment"
+                                                                                class="form-control"
+                                                                                name="departments[]"
+                                                                                id="departments"
+                                                                                multiple>
+                                                                            @foreach($departments as $department)
+                                                                                <option value="{{ $department->id }}">
+                                                                                    {{ $department->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio"
+                                                                               checked
+                                                                               name="role"
+                                                                               id="coordinator"
+                                                                               value="1"
+                                                                               v-model="model.role"> Coordinator
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input type="radio"
+                                                                               name="role"
+                                                                               id="teacher"
+                                                                               value="2"
+                                                                               v-model="model.role"> Teacher
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <button class="btn btn-submit">
+                                                                        Update user
                                                                     </button>
                                                                 </div>
                                                             </div>

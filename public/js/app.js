@@ -1740,6 +1740,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cancel: function cancel() {
             this.creating = false;
+            this.updating = false;
         },
         deleteDepartment: function deleteDepartment(id) {
 
@@ -1770,12 +1771,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         formInput: function formInput(type, name, value) {
 
             return $("<input>").attr("type", type).attr("name", name).val(value);
+        },
+        updateModel: function updateModel(model) {
+            this.updating = true;
+            this.model = model;
+        },
+        checkDepartmentAssignment: function checkDepartmentAssignment(pin) {
+            this.model.dep_assignment.forEach(function (assignment) {
+                if (assignment.id === pin) {
+                    return true;
+                }
+            });
+
+            return false;
         }
     },
 
     data: function data() {
         return {
-            creating: false
+            creating: false,
+            model: {
+                id: 0,
+                dep_assignment: []
+            },
+            updating: false
         };
     },
 
