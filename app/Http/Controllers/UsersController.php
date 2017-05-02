@@ -2,9 +2,10 @@
 
 namespace Planner\Http\Controllers;
 
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Planner\User;
-use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
@@ -37,6 +38,11 @@ class UsersController extends Controller
             )
         );
 
+        // Assign the user the role.
+        $role = Sentinel::findRoleById($request->role);
+
+        $role->users()->attach($user);
+
         // Assign the user the departments.
         $user->depAssignment()->sync($request->departments);
 
@@ -53,9 +59,32 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Fetch the user.
         $user = User::findOrFail($id);
 
+        // Validate the user credentials
+        $this->validate($request, [
+            'surName' => 'required|string|max:255',
+            'otherNames' => 'required|string|max:255',
+            'userName' => 'required|string|max:255',
+            'emailAddress' => [
+                'required',
+                'string',
+                'email',
+                'max:2555',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'role' => 'required',
+        ]);
+
+        // Update the user.
         $user->update($request->all());
+
+        // Assign the user the role.
+        $user->roles()->sync(array($request->role));
+
+        // Assign the user the departments.
+        $user->depAssignment()->sync($request->departments);
 
         return redirect('/administrative');
     }

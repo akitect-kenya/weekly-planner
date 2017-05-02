@@ -1787,12 +1787,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
+    computed: {
+        role: function role() {
+            console.log(this.model.roles[0].id);
+
+            return this.model.roles[0].id;
+        }
+    },
+
     data: function data() {
         return {
             creating: false,
             model: {
                 id: 0,
-                dep_assignment: []
+                dep_assignment: [],
+                roles: [{
+                    id: 1
+                }]
             },
             updating: false
         };

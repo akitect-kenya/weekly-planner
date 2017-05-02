@@ -32,6 +32,7 @@
                             </li>
                         </ul>
                     </nav>
+
                     <div class="content">
                         <section id="departments">
                             <crud delete-url="{{ url('/departments') }}" inline-template>

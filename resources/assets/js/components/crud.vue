@@ -68,12 +68,23 @@
             }
         },
 
+        computed: {
+            role() {
+                console.log(this.model.roles[0].id);
+
+                return this.model.roles[0].id
+            }
+        },
+
         data() {
             return {
                 creating: false,
                 model: {
                     id: 0,
-                    dep_assignment: []
+                    dep_assignment: [],
+                    roles: [{
+                        id: 1
+                    }]
                 },
                 updating: false
             }

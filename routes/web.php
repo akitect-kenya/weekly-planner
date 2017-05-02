@@ -25,7 +25,6 @@ Route::get('/administrative', 'AdministrativeTabController@index');
 Route::get('/plans', 'PlansTabController@index');
 
 // Departments
-Route::get('/departments', 'DepartmentsController@index');
 Route::post('/departments', 'DepartmentsController@store');
 Route::put('/departments/{department}', 'DepartmentsController@update');
 Route::delete('/departments/{department}', 'DepartmentsController@destroy');
@@ -36,13 +35,11 @@ Route::put('/grades/{grade}', 'GradesController@update');
 Route::delete('/grades/{grade}', 'GradesController@destroy');
 
 // Subjects
-Route::get('/subjects', 'SubjectsController@index');
 Route::post('/subjects', 'SubjectsController@store');
 Route::put('/subjects/{subject}', 'SubjectsController@update');
 Route::delete('/subjects/{subject}', 'SubjectsController@destroy');
 
 // Users
-Route::get('/users', 'UsersController@index');
 Route::post('/users', 'UsersController@store');
 Route::put('/users/{user}', 'UsersController@update');
 Route::delete('/users/{user}', 'UsersController@destroy');

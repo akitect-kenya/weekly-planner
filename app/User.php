@@ -2,6 +2,7 @@
 
 namespace Planner;
 
+use Cartalyst\Sentinel\Roles\EloquentRole;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -73,5 +74,15 @@ class User extends Authenticatable
     public function depAssignment()
     {
         return $this->belongsToMany(Department::class, 'department_user');
+    }
+
+    /**
+     * Links tot the user's roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(EloquentRole::class, 'role_users', 'user_id', 'role_id');
     }
 }

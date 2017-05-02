@@ -214,12 +214,16 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" checked name="role" id="coordinator" value="1"> Coordinator
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="role" id="teacher" value="2"> Teacher
-                                                                    </label>
+                                                                    @foreach($roles as $role)
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio"
+                                                                                   checked
+                                                                                   name="role"
+                                                                                   id="{{ $role->slug }}"
+                                                                                   value="{{ $role->id }}">
+                                                                            {{ $role->name }}
+                                                                        </label>
+                                                                    @endforeach
                                                                 </div>
                                                             </div>
 
@@ -358,21 +362,17 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio"
-                                                                               checked
-                                                                               name="role"
-                                                                               id="coordinator"
-                                                                               value="1"
-                                                                               v-model="model.role"> Coordinator
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio"
-                                                                               name="role"
-                                                                               id="teacher"
-                                                                               value="2"
-                                                                               v-model="model.role"> Teacher
-                                                                    </label>
+                                                                    @foreach($roles as $role)
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio"
+                                                                                   checked
+                                                                                   name="role"
+                                                                                   v-model="role"
+                                                                                   id="{{ $role->slug }}"
+                                                                                   value="{{ $role->id }}">
+                                                                            {{ $role->name }}
+                                                                        </label>
+                                                                    @endforeach
                                                                 </div>
                                                             </div>
 
