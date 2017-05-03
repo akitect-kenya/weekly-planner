@@ -2,6 +2,10 @@
 
 namespace Planner\Http\Controllers;
 
+use Planner\Grade;
+use Planner\Subject;
+use Planner\WeekDay;
+use Planner\WeeklyPlan;
 use Planner\WeekSetup;
 
 class PlansTabController extends Controller
@@ -13,8 +17,21 @@ class PlansTabController extends Controller
      */
     public function index()
     {
-        $wbSetups = WeekSetup::paginate(5);
+        // Days.
+        $days = WeekDay::all();
 
-        return view('plans.index', compact('wbSetups'));
+        // Subjects.
+        $subjects = Subject::all();
+
+        // Setups.
+        $wbSetups = WeekSetup::all();
+
+        // Plan.
+        $plans = WeeklyPlan::all();
+
+        // Grades.
+        $grades = Grade::all();
+
+        return view('plans.index', compact('days', 'grades', 'subjects', 'plans', 'wbSetups'));
     }
 }

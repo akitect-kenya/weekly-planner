@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('crud', require('./components/crud.vue'));
+Vue.component('weekly-plan', require('./components/weekly-plan.vue'));
 
 const app = new Vue({
     el: '#app'
