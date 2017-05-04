@@ -1828,11 +1828,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         addSubjectPlan: function addSubjectPlan() {
             this.subjectPlans.push($.extend({}, this.subjectPlan));
+        },
+        submit: function submit() {
+            // Build the weekly plan object.
+            var weekly_plan_data = {
+                grade_id: this.grade_id,
+                weekly_setup_id: this.weekly_setup_id,
+                subjectPlans: this.subjectPlans
+            };
+
+            // Build the form.
+            var form = $(document.createElement('form'));
+
+            $(form).attr("action", this.createWeeklyPlanUrl);
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+
+            // Add form elements.
+            var weekly_plan = this.formInput("text", "weekly_plan", JSON.stringify(weekly_plan_data));
+            $(form).append($(weekly_plan));
+
+            var csrf_token = this.formInput("hidden", "_token", window.Laravel.csrfToken);
+            $(form).append($(csrf_token));
+
+            // Add the form to the document body.
+            form.appendTo(document.body);
+
+            // Add submit button.
+            $(form).append($("<input>").attr("id", "create-weekly-plan").attr("type", 'submit').attr("name", 'submit').val('Submit'));
+
+            // Submit the form.
+            $("#create-weekly-plan").click();
+        },
+        formInput: function formInput(type, name, value) {
+
+            return $("<input>").attr("type", type).attr("name", name).val(value);
         }
     },
 
     data: function data() {
         return {
+            grade_id: null,
+            weekly_setup_id: null,
             subjectPlan: {
                 classWork: null,
                 homeWork: null,
@@ -1845,7 +1882,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    props: [],
+    props: ['createWeeklyPlanUrl'],
 
     name: 'weekly-plan'
 

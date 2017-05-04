@@ -11,9 +11,14 @@ class WeeklyPlan extends Model
         'grade_id'
     ];
 
+    public function weeklyPlanSubject()
+    {
+        return $this->hasMany(WeeklyPlanSubject::class);
+    }
+
     public function setup()
     {
-        return $this->belongsTo(WeekSetup::class);
+        return $this->belongsTo(WeekSetup::class, 'weekly_setup_id', 'id');
     }
 
     public function grade()

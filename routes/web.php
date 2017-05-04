@@ -48,3 +48,8 @@ Route::delete('/users/{user}', 'UsersController@destroy');
 Route::post('/setups', 'WeekSetupsController@store');
 Route::put('/setups/{setup}', 'WeekSetupsController@update');
 Route::delete('/setups/{setup}', 'WeekSetupsController@destroy');
+
+// Weekly Plans
+Route::post('/plans', 'WeeklyPlansController@store');
+Route::put('/plans/{plan}', 'WeeklyPlansController@update');
+Route::delete('/plans/{plan}', 'WeeklyPlansController@destroy');
