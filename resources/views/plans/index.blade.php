@@ -275,11 +275,11 @@
                                     <div class="panel-heading">
                                         Weekly Plans
 
-                                        <a v-if="!creating" href="#" v-on:click="create()" class="pull-right">
+                                        <a v-if="!creating && !updating" href="#" v-on:click="create()" class="pull-right">
                                             New
                                         </a>
 
-                                        <a v-if="creating" href="#" v-on:click="cancel()" class="pull-right">
+                                        <a v-if="creating || updating" href="#" v-on:click="cancel()" class="pull-right">
                                             Cancel
                                         </a>
                                     </div>
@@ -482,6 +482,173 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12 text-center">
                                                                         <button v-on:click="submit()"
+                                                                                class="btn btn-submit">
+                                                                            Save weekly plan
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </weekly-plan>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="updating" class="crud-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <weekly-plan
+                                                                :model="model"
+                                                                update-weekly-plan-url="{{ url('/plans/') }}"
+                                                                inline-template>
+                                                            <div class="weekly-plan">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group pull-left">
+                                                                            <select name="grade"
+                                                                                    id="grade"
+                                                                                    class="form-control"
+                                                                                    v-model="plan.grade_id">
+                                                                                <option>-- Select a grade --</option>
+                                                                                @foreach($grades as $grade)
+                                                                                    <option value="{{ $grade->id }}">
+                                                                                        {{ $grade->class_name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group pull-right">
+                                                                            <select name="grade"
+                                                                                    id="grade"
+                                                                                    class="form-control"
+                                                                                    v-model="plan.weekly_setup_id">
+                                                                                <option>-- Select a setup --</option>
+                                                                                @foreach($wbSetups as $setup)
+                                                                                    <option value="{{ $setup->id }}">
+                                                                                        {{ $setup->weeklySetupName }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <hr>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <button v-on:click="addPlanSubjectPlan()" class="btn btn-default pull-right">
+                                                                            New Subject Plan
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="panel-group"
+                                                                     id="accordion"
+                                                                     role="tablist"
+                                                                     aria-multiselectable="true">
+                                                                    <div v-for="(subjectPlan, index) in plan.weekly_plan_subject"
+                                                                         class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingOne">
+                                                                            <h4 class="panel-title">
+                                                                                <a role="button"
+                                                                                   data-toggle="collapse"
+                                                                                   data-parent="#accordion"
+                                                                                   v-bind:href="'#collapse' + (index + 1)"
+                                                                                   aria-expanded="true"
+                                                                                   aria-controls="collapseOne">
+                                                                                    @{{ '# ' + (index + 1) }}
+                                                                                </a>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div v-bind:id="'collapse' + (index + 1)"
+                                                                             class="panel-collapse collapse"
+                                                                             role="tabpanel"
+                                                                             aria-labelledby="headingOne">
+                                                                            <div class="panel-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="form-group">
+                                                                                            <label for="numberOfPeriods">Number of periods:</label>
+                                                                                            <input type="number"
+                                                                                                   id="numberOfPeriods"
+                                                                                                   name="numberOfPeriods"
+                                                                                                   v-model="subjectPlan.numberOfPeriods"
+                                                                                                   class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="subject_id">Subject:</label>
+                                                                                            <select name="subject_id"
+                                                                                                    id="subject_id"
+                                                                                                    class="form-control"
+                                                                                                    v-model="subjectPlan.subject_id">
+                                                                                                @foreach($subjects as $subject)
+                                                                                                    <option value="{{ $subject->id }}">
+                                                                                                        {{ $subject->name }}
+                                                                                                    </option>
+                                                                                                @endforeach
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="subject_id">Day:</label>
+                                                                                            <select name="subject_id"
+                                                                                                    id="subject_id"
+                                                                                                    class="form-control"
+                                                                                                    v-model="subjectPlan.week_day_id">
+                                                                                                @foreach($days as $day)
+                                                                                                    <option value="{{ $day->id }}">
+                                                                                                        {{ $day->dayName }}
+                                                                                                    </option>
+                                                                                                @endforeach
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="form-group">
+                                                                                            <label for="classWork">Class Work:</label>
+                                                                                            <textarea name="classWork"
+                                                                                                      id="classWork"
+                                                                                                      cols="30"
+                                                                                                      rows="10"
+                                                                                                      class="form-control"
+                                                                                                      v-model="subjectPlan.classWork"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="form-group">
+                                                                                            <label for="homeWork">Home Work:</label>
+                                                                                            <textarea name="homeWork"
+                                                                                                      id="homeWork"
+                                                                                                      cols="30"
+                                                                                                      rows="10"
+                                                                                                      class="form-control"
+                                                                                                      v-model="subjectPlan.homeWork"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-12 text-center">
+                                                                        <button v-on:click="update()"
                                                                                 class="btn btn-submit">
                                                                             Save weekly plan
                                                                         </button>

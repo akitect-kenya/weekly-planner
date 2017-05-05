@@ -27,7 +27,7 @@ class PlansTabController extends Controller
         $wbSetups = WeekSetup::all();
 
         // Plan.
-        $plans = WeeklyPlan::all();
+        $plans = WeeklyPlan::with(array('grade', 'setup', 'weeklyPlanSubject'))->get();
 
         // Grades.
         $grades = Grade::all();

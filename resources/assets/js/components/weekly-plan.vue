@@ -6,6 +6,10 @@
                 this.subjectPlans.push($.extend({}, this.subjectPlan));
             },
 
+            addPlanSubjectPlan() {
+                this.plan.weekly_plan_subject.push($.extend({}, this.subjectPlan));
+            },
+
             submit () {
                 // Build the weekly plan object.
                 let weekly_plan_data = {
@@ -45,12 +49,53 @@
 
             },
 
+            update () {
+                // Build the form.
+                let form = $(document.createElement('form'));
+
+                $(form).attr("action", this.updateWeeklyPlanUrl + '/' + this.plan.id);
+                $(form).attr("method", "POST");
+                $(form).css("display", "none");
+
+                // Add form elements.
+                let weekly_plan = this.formInput("text", "weekly_plan", JSON.stringify(this.plan));
+                $(form).append($(weekly_plan));
+
+                let csrf_token = this.formInput("hidden", "_token", window.Laravel.csrfToken);
+                $(form).append($(csrf_token));
+
+                let method = this.formInput("hidden", "_method", 'PUT');
+                $(form).append($(method));
+
+                // Add the form to the document body.
+                form.appendTo(document.body);
+
+                // Add submit button.
+                $(form).append(
+                    $("<input>")
+                        .attr("id", "update-weekly-plan")
+                        .attr("type", 'submit')
+                        .attr("name", 'submit')
+                        .val('Update')
+                );
+
+                // Submit the form.
+                $("#update-weekly-plan").click();
+
+            },
+
             formInput(type, name, value) {
 
                 return $("<input>")
                     .attr("type", type)
                     .attr("name", name)
                     .val(value);
+            }
+        },
+
+        computed: {
+            plan() {
+                return this.model;
             }
         },
 
@@ -70,7 +115,9 @@
         },
 
         props: [
-            'createWeeklyPlanUrl'
+            'createWeeklyPlanUrl',
+            'model',
+            'updateWeeklyPlanUrl'
         ],
 
         name: 'weekly-plan'
