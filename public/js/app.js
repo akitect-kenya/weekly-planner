@@ -1829,6 +1829,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addSubjectPlan: function addSubjectPlan() {
             this.subjectPlans.push($.extend({}, this.subjectPlan));
         },
+        addPlanSubjectPlan: function addPlanSubjectPlan() {
+            this.plan.weekly_plan_subject.push($.extend({}, this.subjectPlan));
+        },
         submit: function submit() {
             // Build the weekly plan object.
             var weekly_plan_data = {
@@ -1860,9 +1863,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Submit the form.
             $("#create-weekly-plan").click();
         },
+        update: function update() {
+            // Build the form.
+            var form = $(document.createElement('form'));
+
+            $(form).attr("action", this.updateWeeklyPlanUrl + '/' + this.plan.id);
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+
+            // Add form elements.
+            var weekly_plan = this.formInput("text", "weekly_plan", JSON.stringify(this.plan));
+            $(form).append($(weekly_plan));
+
+            var csrf_token = this.formInput("hidden", "_token", window.Laravel.csrfToken);
+            $(form).append($(csrf_token));
+
+            var method = this.formInput("hidden", "_method", 'PUT');
+            $(form).append($(method));
+
+            // Add the form to the document body.
+            form.appendTo(document.body);
+
+            // Add submit button.
+            $(form).append($("<input>").attr("id", "update-weekly-plan").attr("type", 'submit').attr("name", 'submit').val('Update'));
+
+            // Submit the form.
+            $("#update-weekly-plan").click();
+        },
         formInput: function formInput(type, name, value) {
 
             return $("<input>").attr("type", type).attr("name", name).val(value);
+        }
+    },
+
+    computed: {
+        plan: function plan() {
+            return this.model;
         }
     },
 
@@ -1882,7 +1918,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    props: ['createWeeklyPlanUrl'],
+    props: ['createWeeklyPlanUrl', 'model', 'updateWeeklyPlanUrl'],
 
     name: 'weekly-plan'
 

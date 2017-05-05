@@ -34,6 +34,11 @@ Route::post('/grades', 'GradesController@store');
 Route::put('/grades/{grade}', 'GradesController@update');
 Route::delete('/grades/{grade}', 'GradesController@destroy');
 
+// Organisation
+Route::post('/organisations', 'OrganisationsController@store');
+Route::put('/organisations/{organisation}', 'OrganisationsController@update');
+Route::delete('/organisations/{organisation}', 'OrganisationsController@destroy');
+
 // Subjects
 Route::post('/subjects', 'SubjectsController@store');
 Route::put('/subjects/{subject}', 'SubjectsController@update');

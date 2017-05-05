@@ -13,6 +13,12 @@
                                     <span>Users</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#organisations"
+                                   class="icon icon-user">
+                                    <span>Organisations</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                     <div class="content">
@@ -380,6 +386,152 @@
                                                                 <div class="col-md-12 text-center">
                                                                     <button class="btn btn-submit">
                                                                         Update user
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </crud>
+                        </section>
+
+                        <section id="organisations">
+                            <crud delete-url="{{ url('/organisations') }}" inline-template>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Organisations
+
+                                        <a v-if="!creating && !updating" href="#" v-on:click="create()" class="pull-right">
+                                            New
+                                        </a>
+
+                                        <a v-if="creating || updating" href="#" v-on:click="cancel()" class="pull-right">
+                                            Cancel
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="crud">
+                                            <div v-show="!creating && !updating" class="crud-list">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table id="data-table-1" class="table table-responsive">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Name</th>
+                                                                <th class="text-center">
+                                                                    Actions
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Name</th>
+                                                                <th class="text-center">
+                                                                    Actions
+                                                                </th>
+                                                            </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                            @foreach($organisations as $organisation)
+                                                                <tr>
+                                                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                                                    <td>{{ $organisation->orgName }}</td>
+                                                                    <th class="text-center">
+                                                                        <i v-on:click="updateModel({{ json_encode($organisation) }})"
+                                                                           class="fa fa-edit info-icon"></i>
+
+                                                                        <i v-on:click="deleteDepartment({{ $organisation->id }})"
+                                                                           class="fa fa-trash danger-icon"></i>
+                                                                    </th>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-show="creating" class="crud-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5>
+                                                            Create new organisation
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form action="{{ url('/organisations') }}" method="POST">
+
+                                                            {{ csrf_field() }}
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="orgName">Organisation Name:</label>
+                                                                        <input id="orgName"
+                                                                               name="orgName"
+                                                                               type="text"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <button class="btn btn-submit">
+                                                                        Create Organization
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-show="updating" class="crud-form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h5>
+                                                            Update an organization
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form v-bind:action="'{{ url('/organisations') }}' + '/' + model.id"
+                                                              method="POST">
+
+                                                            {{ csrf_field() }}
+
+                                                            {{ method_field('PUT') }}
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="orgName">Organisation Name:</label>
+                                                                        <input id="orgName"
+                                                                               name="orgName"
+                                                                               type="text"
+                                                                               v-model="model.orgName"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <button class="btn btn-submit">
+                                                                        Update organisation
                                                                     </button>
                                                                 </div>
                                                             </div>
